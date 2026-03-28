@@ -97,6 +97,6 @@ Enter your guess: 70
 
 ## 👨‍💻 Author
 
-Developed by *[Your Name]* as part of C++ learning journey.
+Developed by *Muhammad Nauman* as part of C++ learning journey.
 
 ---
