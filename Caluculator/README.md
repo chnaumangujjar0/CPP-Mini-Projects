@@ -3,7 +3,6 @@
 A console-based **Calculator application** built using **Object-Oriented Programming (OOP)** in C++.
 This project performs basic arithmetic operations with a user-friendly menu system and supports continuous calculations.
 
----
 
 ## 🧠 How It Works
 
