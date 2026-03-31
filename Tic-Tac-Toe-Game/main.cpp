@@ -78,7 +78,7 @@ int main(){
 
         // Check win
         if(moves >= 5 && checkWin(board, winPatterns, currentPlayer)){
-            cout << "\n🎉 Player " << currentPlayer << " wins!\n";
+            cout << "\n Player " << currentPlayer << " wins!\n";
             return 0;
         }
 
