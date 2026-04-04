@@ -33,13 +33,24 @@ private:
     vector<CartItem> cart;
 
 public:
-    void addProduct(int id, string name, int stock, float price)
+    // Add product to Cart
+    bool addProduct(int id, string name, int stock, float price)
     {
+        for (Product &p : products)
+        {
+            if (p.name == name)
+            {
+                cout << "\nThis product already exists in inventory.\n";
+                return false;
+            }
+        }
+
         products.push_back(Product(id, name, stock, price));
         cout << "\nProduct Added successfully";
+        return true;
     }
-
-    void displayProducts()
+    // Show Inventory
+    void inventory()
     {
         if (products.empty())
         {
@@ -53,13 +64,22 @@ public:
             cout << "\nName : " << p.name;
             cout << "\nStock : " << p.stock;
             cout << "\nPrice : " << p.price;
-            cout << "\n------------------------------";
+            cout << "\n------------------------------\n";
         }
     }
-
+    // Add product to Cart
     void addToCart(string name, int quantity)
     {
         bool found = false;
+
+        for (CartItem &c : cart)
+        {
+            if (c.name == name)
+            {
+                cout << "\nProduct already exists in cart.\n";
+                return;
+            }
+        }
 
         for (Product &p : products)
         {
@@ -73,35 +93,36 @@ public:
                     return;
                 }
 
-                // FIXED boundary condition
                 if (p.stock >= quantity)
                 {
                     cart.push_back(CartItem(p.name, p.price, quantity));
                     p.stock -= quantity;
+                    cout << "\nProduct added to cart successfully!\n";
                 }
                 else
                 {
-                    int available = p.stock; 
+                    int available = p.stock;
+
                     if (available == 0)
                     {
-                        cout << "\nOut of stock!";
+                        cout << "\nOut of stock!\n";
                         return;
                     }
 
                     cart.push_back(CartItem(p.name, p.price, available));
-                    cout << "\nWe have only " << available << " in stock.";
+                    cout << "\nOnly " << available << " items available.\n";
                     p.stock = 0;
                 }
-                break; 
+                break;
             }
         }
 
         if (!found)
         {
-            cout << "\nSorry, this product is not available.";
+            cout << "\nProduct not found.\n";
         }
     }
-
+    // Show Cart items
     void showCart()
     {
         if (cart.empty())
@@ -115,15 +136,15 @@ public:
         for (CartItem &c : cart)
         {
             num++;
-            cout << "\n | " << num << " | " << c.name << " | " << c.price << " | " << c.quantity << " | ";
+            cout << "\n | " << num << " | " << c.name << " | " << c.price << " | " << c.quantity << " |";
         }
     }
-
+    // Calculate Bill
     void calculateBill()
     {
         if (cart.empty())
         {
-            cout << "\nYour cart is empty.";
+            cout << "\nYour cart is empty.\n";
             return;
         }
 
@@ -135,11 +156,67 @@ public:
 
         cout << "\nTotal Bill : " << total;
     }
-
+    // Create New Cart
     void newCart()
     {
         cart.clear();
-        cout << "\nNew cart started!";
+        cout << "\nNew cart started!\n";
+    }
+    // Remove Individual item from Cart
+    void removeItem(string name)
+    {
+        bool found = false;
+
+        for (int i = 0; i < cart.size(); i++)
+        {
+            if (cart[i].name == name)
+            {
+                found = true;
+
+                // Restore stock
+                for (Product &p : products)
+                {
+                    if (p.name == name)
+                    {
+                        p.stock += cart[i].quantity;
+                        break;
+                    }
+                }
+
+                cart.erase(cart.begin() + i);
+                cout << "\nItem removed successfully!\n";
+                return;
+            }
+        }
+
+        if (!found)
+        {
+            cout << "\nItem not found in cart.\n";
+        }
+    }
+    // Print Bill
+    void printBill()
+    {
+        if (cart.empty())
+        {
+            cout << "\nYour cart is empty.\n";
+            return;
+        }
+    
+        double total = 0;
+        int num = 0;
+
+        cout << "\n | No | Name | Price | Qty |";
+
+        for (CartItem &c : cart)
+        {
+            num++;
+            cout << "\n | " << num << " | " << c.name << " | " << c.price << " | " << c.quantity << " |";
+            total += (c.quantity * c.price);
+        }
+
+        cout << "\n--------------------------------------";
+        cout << "\nTotal Bill : " << total << endl;
     }
 };
 
@@ -160,42 +237,45 @@ int main()
         cout << "\n4. Show Cart";
         cout << "\n5. Calculate Bill";
         cout << "\n6. New Cart";
-        cout << "\n7. Exit";
+        cout << "\n7. Delete Item from Cart";
+        cout << "\n8. Print Bill";
+        cout << "\n9. Exit";
         cout << "\nEnter Your Choice : ";
         cin >> choice;
+
+        cin.ignore(); 
 
         switch (choice)
         {
         case 1:
             cout << "\nEnter Product Name : ";
-            cin.ignore();
             getline(cin, name);
             transform(name.begin(), name.end(), name.begin(), ::tolower);
 
-            cout << "\nEnter product Quantity : ";
+            cout << "Enter product Quantity : ";
             cin >> stock;
 
-            cout << "\nEnter product Price : ";
+            cout << "Enter product Price : ";
             cin >> price;
 
             id++;
-            bill.addProduct(id, name, stock, price);
+            if (!bill.addProduct(id, name, stock, price)){
+                id--;
+            }
             break;
 
         case 2:
-            bill.displayProducts();
+            bill.inventory();
             break;
 
         case 3:
         {
             int quantity;
-
             cout << "\nEnter Product Name : ";
-            cin.ignore();
             getline(cin, name);
             transform(name.begin(), name.end(), name.begin(), ::tolower);
 
-            cout << "\nEnter quantity : ";
+            cout << "Enter quantity : ";
             cin >> quantity;
 
             bill.addToCart(name, quantity);
@@ -215,6 +295,17 @@ int main()
             break;
 
         case 7:
+            cout << "\nEnter Product Name : ";
+            getline(cin, name);
+            transform(name.begin(), name.end(), name.begin(), ::tolower);
+            bill.removeItem(name);
+            break;
+
+        case 8:
+            bill.printBill();
+            break;
+
+        case 9:
             cout << "\nExited!";
             return 0;
 
