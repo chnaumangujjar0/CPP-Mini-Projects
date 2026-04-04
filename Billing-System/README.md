@@ -2,27 +2,42 @@
 
 ## 📌 Overview
 
-The **Billing System** is a console-based C++ application that simulates a simple Point of Sale (POS) system. It allows users to manage products, add items to a cart, and generate a final bill.
+The **Billing System** is a console-based C++ application that simulates a simple **Point of Sale (POS)** system. It allows users to manage inventory, handle cart operations, and generate a final bill efficiently.
 
-This project demonstrates strong fundamentals of **Object-Oriented Programming (OOP)** and **STL (vector)** while solving a real-world problem.
+This project demonstrates strong understanding of **Object-Oriented Programming (OOP)** concepts along with practical usage of **STL (vector)** to solve a real-world problem.
 
 ---
 
 ## 🚀 Features
 
+### 🏪 Inventory Management
+
 * ➕ Add products to inventory
+* 🚫 Prevent duplicate product entries
 * 📦 Display all available products
-* 🛒 Add items to cart
+
+### 🛒 Cart Operations
+
+* ➕ Add products to cart
+* 🚫 Prevent duplicate items in cart
 * 📋 View cart details
-* 💰 Calculate total bill
-* 🔄 Reset cart (start new billing)
-* ❌ Exit system
+* ❌ Remove item from cart (with stock restoration)
+* 🔄 Start a new cart (reset)
+
+### 💰 Billing System
+
+* 🧮 Calculate total bill
+* 🧾 Print detailed bill with items and total
+
+### ⚙️ System Controls
+
+* ❌ Exit system safely
 
 ---
 
 ## 🧱 Project Structure
 
-### 🔹 Product Class
+### 🔹 `Product` Class
 
 Represents each product in the inventory:
 
@@ -31,7 +46,7 @@ Represents each product in the inventory:
 * Stock quantity
 * Price
 
-### 🔹 CartItem Class
+### 🔹 `CartItem` Class
 
 Represents items added to the cart:
 
@@ -39,39 +54,42 @@ Represents items added to the cart:
 * Price
 * Quantity
 
-### 🔹 BillingSystem Class
+### 🔹 `BillingSystem` Class
 
-Handles core system logic:
+Core logic handler:
 
-* Product management
-* Cart operations
-* Billing calculation
+* Inventory management
+* Cart handling
+* Billing calculations
+* Stock updates
 
 ---
 
 ## 🧠 Concepts Used
 
 * Object-Oriented Programming (Classes & Objects)
-* Constructors
-* Vectors (STL)
+* Constructors & Initialization Lists
+* STL (`vector`)
 * Loops & Conditional Statements
-* Input Handling
+* Input Handling (`cin`, `getline`)
+* Algorithm Library (`transform`, `remove_if`)
 * Basic System Design
 
 ---
 
 ## 🔄 Program Flow
 
-1. Add products to the system
-2. View available products
+1. Add products to inventory
+2. Display available products
 3. Add products to cart
-4. View cart
-5. Calculate total bill
-6. Start a new cart or exit
+4. View cart details
+5. Remove item (optional)
+6. Calculate or print bill
+7. Start a new cart or exit
 
 ---
 
-## 💡 Example Output
+## 💡 Sample Menu
 
 ```
 1. Add product in Stock
@@ -80,27 +98,31 @@ Handles core system logic:
 4. Show Cart
 5. Calculate Bill
 6. New Cart
-7. Exit
+7. Delete Item from Cart
+8. Print Bill
+9. Exit
 ```
 
 ---
 
 ## 🎯 Learning Outcomes
 
-* Built a real-world mini project using C++
-* Practiced working with vectors of objects
-* Implemented inventory and billing logic
-* Improved problem-solving and system design skills
+* Built a real-world console application using C++
+* Applied OOP concepts in a structured way
+* Practiced working with dynamic data using vectors
+* Implemented inventory & billing logic
+* Improved problem-solving and edge-case handling
 
 ---
 
 ## 🔮 Future Improvements
 
-* Remove item from cart
-* Search product by ID
-* Generate formatted bill receipt
-* Save data to file (file handling)
-* GUI version
+* 🔍 Search product by ID or name
+* 💾 File handling (save/load data)
+* 📊 Better bill formatting (receipt-style output)
+* 🖥️ GUI version (Qt / Web-based)
+* 🧾 Discount & tax system
+* 👥 Multi-user support
 
 ---
 
@@ -112,6 +134,6 @@ Handles core system logic:
 
 ## ⭐ GitHub Note
 
-If you find this project helpful, feel free to ⭐ the repository!
+If you found this project useful or interesting, consider giving it a ⭐ on GitHub!
 
 ---
